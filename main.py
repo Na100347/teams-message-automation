@@ -15,8 +15,8 @@ creds = ServiceAccountCredentials.from_json_keyfile_name("teamstaskautomation-48
 client = gspread.authorize(creds)
 
 # URL của Sheet tổng quan và Sheet cá nhân
-total_sheet_url = "URL_CUA_TASK_TONG_QUAN"  # Thay bằng URL thực tế
-personal_sheet_url = "URL_CUA_TASK_CA_NHAN"  # Thay bằng URL thực tế
+total_sheet_url = "https://docs.google.com/spreadsheets/d/1SWSVjinG8kefQB18YqIk3gDttaKOrhUwnxjh7OmEpXs/edit?gid=0#gid=0"  # Thay bằng URL thực tế
+personal_sheet_url = "https://docs.google.com/spreadsheets/d/1E8g3inBy8IlzdUaM8nzBQL5SVOMp5NDX9Arh8KneWnc/edit?gid=0#gid=0"  # Thay bằng URL thực tế
 
 def sync_tasks():
     your_name = "Tran Nu Ho Na"
