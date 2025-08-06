@@ -3,12 +3,12 @@ from selenium.webdriver.chrome.options import Options
 import pickle 
 import time
 
-options = Options()
+# options = Options()
 # options.add_argument("--user-data-dir=/Users/vietnguyen/selenium-profile-temp")
 from selenium.webdriver.chrome.service import Service
-options = Options()
-options.add_argument("--user-data-dir=C:\\Temp\\selenium-profile-temp")  # Đảm bảo thư mục này tồn tại
-driver = webdriver.Chrome(service=Service('D:\\test\\teams-message-automation\\chromedriver-win64\\chromedriver.exe'), options=options)
+chrom_options = Options()
+chrom_options.add_argument("--user-data-dir=C:\\Temp\\selenium-profile-temp")  # Đảm bảo thư mục này tồn tại
+driver = webdriver.Chrome(service=Service('D:\\test\\teams-message-automation\\chromedriver-win64\\chromedriver.exe'), options=chrom_options)
 # driver = webdriver.Chrome(options=options)
 driver.get("https://teams.microsoft.com")
 

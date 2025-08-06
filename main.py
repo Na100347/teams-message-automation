@@ -53,7 +53,9 @@ def sync_tasks():
         chrome_options.add_argument("--disable-dev-shm-usage")
 
         from selenium.webdriver.chrome.service import Service
-        driver = webdriver.Chrome(service=Service('chromedriver'), options=chrome_options)
+        chrom_options = Options()
+        chrom_options.add_argument("--user-data-dir=C:\\Temp\\selenium-profile-temp") 
+        driver = webdriver.Chrome(service=Service('D:\\test\\teams-message-automation\\chromedriver-win64\\chromedriver.exe'), options=chrom_options)
         wait = WebDriverWait(driver, 60)
 
         try:
