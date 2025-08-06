@@ -27,7 +27,7 @@ total_sheet_url = "https://docs.google.com/spreadsheets/d/1SWSVjinG8kefQB18YqIk3
 personal_sheet_url = "https://docs.google.com/spreadsheets/d/1E8g3inBy8IlzdUaM8nzBQL5SVOMp5NDX9Arh8KneWnc/edit?gid=0#gid=0"  # Thay bằng URL của "Task_Ca_Nhan_Tran_Nu_Ho_Na"
 
 
-@app.route('/webhook/send-teams-task', methods=['POST'])
+# @app.route('/webhook/send-teams-task', methods=['POST'])
 def send_message():
     data = request.get_json()
     task = data.get("task")
@@ -129,5 +129,6 @@ def send_message():
     return {"status": "Message sent" if personal_tasks else "No tasks"}, 200
 
 if __name__=='__main__':
-    app.run(port=5001)
+    # app.run(port=5001)
+    sync_tasks()
 #   app.run(host="0.0.0.0", port=5001)
