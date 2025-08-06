@@ -18,6 +18,6 @@ time.sleep(20)
 cookies = driver.get_cookies()
 with open("teams_cookies.pkl","wb") as file:
     pickle.dump(cookies,file)
-
-print("Cookies saved successfully.")
+print("Cookie đã được lưu. Kiểm tra domain:", [cookie['domain'] for cookie in cookies])
+# print("Cookies saved successfully.")
 driver.quit()

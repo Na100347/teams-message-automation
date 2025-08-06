@@ -63,6 +63,7 @@ def sync_tasks():
             try:
                 with open("teams_cookies.pkl", "rb") as cookie_file:
                     cookies = pickle.load(cookie_file)
+                    print("Cookies loaded with domains:", [cookie.get('domain') for cookie in cookies])
                     for cookie in cookies:
                         driver.add_cookie(cookie)
                 driver.get("https://teams.microsoft.com")
