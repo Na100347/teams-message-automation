@@ -24,6 +24,7 @@ jobs:
     - name: Run task sync
       env:
         GOOGLE_APPLICATION_CREDENTIALS: teamstaskautomation-482c1370cde2.json
+        TEAMS_COOKIES: teams_cookies.pkl
       run: |
         # cp $GITHUB_WORKSPACE/teamstaskautomation-482c1370cde2.json .
         # cp $GITHUB_WORKSPACE/teams_cookies.pkl .
