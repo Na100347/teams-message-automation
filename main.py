@@ -19,7 +19,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # Cấu hình Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("teamstaskautomation-482c1370cde2.json", scope)client = gspread.authorize(creds)
+creds = ServiceAccountCredentials.from_json_keyfile_name("teamstaskautomation-482c1370cde2.json", scope)
+client = gspread.authorize(creds)
 
 # URL của Sheet tổng quan và Sheet cá nhân
 total_sheet_url = "https://docs.google.com/spreadsheets/d/1SWSVjinG8kefQB18YqIk3gDttaKOrhUwnxjh7OmEpXs/edit?gid=0#gid=0"  # Thay bằng URL của "Task_Tong_Quan"
