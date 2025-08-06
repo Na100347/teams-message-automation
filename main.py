@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 from time import sleep
-from flask import Flask, request
+# from flask import Flask, request
 import tempfile
 import time
 import pickle
