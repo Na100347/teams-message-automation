@@ -54,10 +54,12 @@ def sync_tasks():
 
         from selenium.webdriver.chrome.service import Service
         chrom_options = Options()
-        chrom_options.add_argument("--user-data-dir=C:\\Temp\\selenium-profile-temp") 
-        driver = webdriver.Chrome(service=Service('D:\\test\\teams-message-automation\\chromedriver-win64\\chromedriver.exe'), options=chrom_options)
+        chromedriver_path = 'chromedriver'  # Tên file trên Linux
+        if os.path.exists(chromedriver_path):
+            driver = webdriver.Chrome(service=Service(chromedriver_path), options=chrome_options)
+        else:
+            raise FileNotFoundError(f"ChromeDriver not found at {chromedriver_path}")
         wait = WebDriverWait(driver, 60)
-
         try:
             driver.get("https://teams.microsoft.com")
             sleep(5)
