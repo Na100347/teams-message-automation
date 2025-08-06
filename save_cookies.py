@@ -1,23 +1,19 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import pickle 
+import pickle
 import time
 
-options = Options()
-# options.add_argument("--user-data-dir=/Users/vietnguyen/selenium-profile-temp")
-from selenium.webdriver.chrome.service import Service
-options = Options()
-options.add_argument("--user-data-dir=C:\\Temp\\selenium-profile-temp")  # Đảm bảo thư mục này tồn tại
-driver = webdriver.Chrome(service=Service('D:\\test\\teams-message-automation\\chromedriver-win64\\chromedriver.exe'), options=options)
-# driver = webdriver.Chrome(options=options)
+chrome_options = Options()
+chrome_options.add_argument("--start-maximized")
+driver = webdriver.Chrome(options=chrome_options)
+
 driver.get("https://teams.microsoft.com")
+print("Vui lòng đăng nhập vào Microsoft Teams (bao gồm MFA nếu có) và nhấn Enter khi hoàn tất...")
+input()
 
-time.sleep(20)
-
-#saved cookies
 cookies = driver.get_cookies()
-with open("teams_cookies.pkl","wb") as file:
-    pickle.dump(cookies,file)
+with open("teams_cookies.pkl", "wb") as f:
+    pickle.dump(cookies, f)
 print("Cookie đã được lưu. Kiểm tra domain:", [cookie['domain'] for cookie in cookies])
-# print("Cookies saved successfully.")
+
 driver.quit()
