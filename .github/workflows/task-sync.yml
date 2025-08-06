@@ -3,7 +3,7 @@ name: Daily Task Sync
 on:
   schedule:
     - cron: '0 8 * * *'  # Chạy lúc 8:00 AM UTC (3:00 PM +07)
-
+  workflow_dispatch:
 jobs:
   sync:
     runs-on: ubuntu-latest
