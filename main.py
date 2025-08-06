@@ -8,7 +8,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+import pickle
 # Cấu hình Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("teamstaskautomation-482c1370cde2.json", scope)
