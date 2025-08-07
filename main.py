@@ -10,7 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pickle
 from datetime import datetime
-
+import os
 # Cấu hình Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("teamstaskautomation-482c1370cde2.json", scope)
@@ -18,8 +18,6 @@ client = gspread.authorize(creds)
 
 # URL của Sheet tổng quan, Sheet cá nhân và Sheet report
 total_sheet_url = "https://docs.google.com/spreadsheets/d/1SWSVjinG8kefQB18YqIk3gDttaKOrhUwnxjh7OmEpXs/edit?gid=0#gid=0"  # Thay bằng URL thực tế
-personal_sheet_url = "https://docs.google.com/spreadsheets/d/1E8g3inBy8IlzdUaM8nzBQL5SVOMp5NDX9Arh8KneWnc/edit?gid=0#gid=0"  # Thay bằng URL thực tế
-report_sheet_id = "https://docs.google.com/spreadsheets/d/1P5XgVQ-nVQHEy6wokgGoatZBvymyAjcpNJZdn7Wo5tI/edit?gid=0#gid=0"  # Thay bằng ID của sheet report
 
 def sync_tasks():
     your_name = "Tran Nu Ho Na"
@@ -61,13 +59,15 @@ def sync_tasks():
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
-
         from selenium.webdriver.chrome.service import Service
-        chrom_options = Options()
-        chrom_options.add_argument("--user-data-dir=C:\\Temp\\selenium-profile-temp") 
-        driver = webdriver.Chrome(service=Service('D:\\test\\teams-message-automation\\chromedriver-win64\\chromedriver.exe'), options=chrom_options)
+        driver = webdriver.Chrome(service=Service('D:\\test\\teams-message-automation\\chromedriver-win64\\chromedriver.exe'), options=chrome_options)
         wait = WebDriverWait(driver, 60)
-
+        # chromedriver_path = 'chromedriver'  # Tên file trên Linux
+        # if os.path.exists(chromedriver_path):
+        #     driver = webdriver.Chrome(service=Service(chromedriver_path), options=chrome_options)
+        # else:
+        #     raise FileNotFoundError(f"ChromeDriver not found at {chromedriver_path}")
+        # wait = WebDriverWait(driver, 60)
         try:
             driver.get("https://teams.microsoft.com")
             sleep(5)

@@ -28,7 +28,8 @@ jobs:
       run: |
         # cp $GITHUB_WORKSPACE/teamstaskautomation-482c1370cde2.json .
         # cp $GITHUB_WORKSPACE/teams_cookies.pkl .
-        wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+        wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip  # Hoặc phiên bản mới hơn
         unzip chromedriver_linux64.zip
         chmod +x chromedriver
+        mv chromedriver chromedriver-linux  # Đổi tên để tránh xung đột
         python main.py
