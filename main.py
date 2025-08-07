@@ -9,21 +9,24 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pickle
+from datetime import datetime
+
 # Cấu hình Google Sheets
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 creds = ServiceAccountCredentials.from_json_keyfile_name("teamstaskautomation-482c1370cde2.json", scope)
 client = gspread.authorize(creds)
 
-# URL của Sheet tổng quan và Sheet cá nhân
+# URL của Sheet tổng quan, Sheet cá nhân và Sheet report
 total_sheet_url = "https://docs.google.com/spreadsheets/d/1SWSVjinG8kefQB18YqIk3gDttaKOrhUwnxjh7OmEpXs/edit?gid=0#gid=0"  # Thay bằng URL thực tế
 personal_sheet_url = "https://docs.google.com/spreadsheets/d/1E8g3inBy8IlzdUaM8nzBQL5SVOMp5NDX9Arh8KneWnc/edit?gid=0#gid=0"  # Thay bằng URL thực tế
+report_sheet_id = "https://docs.google.com/spreadsheets/d/1P5XgVQ-nVQHEy6wokgGoatZBvymyAjcpNJZdn7Wo5tI/edit?gid=0#gid=0"  # Thay bằng ID của sheet report
 
 def sync_tasks():
     your_name = "Tran Nu Ho Na"
 
     # Đọc dữ liệu từ Sheet tổng quan
     try:
-        total_sheet = client.open_by_url(total_sheet_url).sheet1
+        total_sheet = client.open_by_key("1SWSVjinG8kefQB18YqIk3gDttaKOrhUwnxjh7OmEpXs").worksheet("Task_tong")
         tasks = [row for row in total_sheet.get_all_values() if row]
         print("Tasks from sheet:", tasks)
     except Exception as e:
@@ -34,16 +37,23 @@ def sync_tasks():
     your_tasks = [task for task in tasks[1:] if task and task[1].strip() == your_name.strip()]
     if your_tasks:
         try:
-            personal_sheet = client.open_by_url(personal_sheet_url).sheet1
-            personal_sheet.clear()
-            personal_sheet.append_rows(your_tasks)
+            total_sheet = client.open_by_key("1SWSVjinG8kefQB18YqIk3gDttaKOrhUwnxjh7OmEpXs").worksheet("Task_ca_nhan")
+            total_sheet.clear()
+            total_sheet.append_rows(your_tasks)
             print(f"Đã cập nhật Sheet cá nhân cho {your_name}. Tasks: {your_tasks}")
         except gspread.exceptions.APIError as e:
             print(f"Lỗi quyền hoặc kết nối Sheet cá nhân: {e}")
-            personal_sheet.append_rows(your_tasks)
+            total_sheet.append_rows(your_tasks)
         except Exception as e:
             print(f"Lỗi cập nhật Sheet cá nhân: {e}")
             return
+
+    # Ghi dữ liệu ban đầu vào sheet report
+    total_sheet = client.open_by_key("1SWSVjinG8kefQB18YqIk3gDttaKOrhUwnxjh7OmEpXs").worksheet("Report")  # Thay "Report" bằng tên sheet con thực tế
+    report_data = [["Timestamp", "Task", "Assigned To", "Deadline", "Status"]]
+    for task in your_tasks:
+        report_data.append([datetime.now().strftime("%Y-%m-%d %H:%M:%S"), task[0], task[1], task[2], "Pending"])
+    total_sheet.update(report_data)
 
     # Gửi tin nhắn nếu có task
     if your_tasks:
@@ -99,6 +109,11 @@ def sync_tasks():
                     sleep(0.2)
                 message_box.send_keys(Keys.RETURN)
                 print(f"Đã gửi tin nhắn cho task: {task[0]}")
+                # Cập nhật trạng thái trong report
+                for row in report_data[1:]:
+                    if row[1] == task[0] and row[2] == task[1] and row[3] == task[2]:
+                        row_index = report_data.index(row) + 1
+                        total_sheet.update_cell(row_index, 5, "Sent")
                 sleep(3)
 
         except Exception as e:
